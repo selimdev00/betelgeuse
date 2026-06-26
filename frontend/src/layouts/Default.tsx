@@ -1,79 +1,132 @@
-import React from 'react';
-import { Menu, Layout, MenuProps, Avatar, Col, Row, theme } from 'antd';
-import { Link } from 'react-router-dom';
-import {
-  DingtalkOutlined,
-  HeartOutlined,
-  SearchOutlined,
-  UnorderedListOutlined,
-} from '@ant-design/icons';
-const { Header, Footer } = Layout;
+import React, { useState } from 'react';
+import { Link, NavLink } from 'react-router-dom';
+import { Drawer } from 'antd';
+import { MenuOutlined } from '@ant-design/icons';
 
-const items: MenuProps['items'] = [
-  {
-    label: <Link to='/about'>About pokemons</Link>,
-    key: 'about',
-    icon: <DingtalkOutlined />,
-  },
-  {
-    label: <Link to='/catalog'>Pokemon catalog</Link>,
-    key: 'catalog',
-    icon: <UnorderedListOutlined />,
-  },
-  {
-    label: <Link to='/search'>Pokemon search</Link>,
-    key: 'search',
-    icon: <SearchOutlined />,
-  },
-];
+import TypeLegend from '../features/pokemon/TypeLegend';
 
 interface LayoutProps {
-  children: JSX.Element | JSX.Element[];
+  children: React.ReactNode;
 }
 
-const Default = (props: LayoutProps) => {
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+const NAV = [
+  { to: '/catalog', label: 'Catalog' },
+  { to: '/search', label: 'Search' },
+  { to: '/about', label: 'About' },
+];
+
+const Brand = () => (
+  <Link to="/" className="brand" aria-label="Pokedex Field Guide, home">
+    <span className="brand__mark" aria-hidden />
+    <span className="brand__name">
+      Pokedex<span>.</span>Field Guide
+    </span>
+  </Link>
+);
+
+const NavLinks = ({ onNavigate }: { onNavigate?: () => void }) => (
+  <>
+    {NAV.map((item) => (
+      <NavLink
+        key={item.to}
+        to={item.to}
+        className="nav__link"
+        onClick={onNavigate}
+      >
+        {item.label}
+      </NavLink>
+    ))}
+  </>
+);
+
+const Default = ({ children }: LayoutProps) => {
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
-    <Layout className='layout'>
-      <Header className='header__wrapper'>
-        <Link to='/'>
-          <div className='header__logo'></div>
-        </Link>
+    <div className="app-shell">
+      <a className="skip-link" href="#main">
+        Skip to content
+      </a>
 
-        <Menu mode='horizontal' theme='dark' items={items} />
-      </Header>
+      <header className="site-header">
+        <div className="container site-header__inner">
+          <Brand />
 
-      {props.children}
+          <nav className="nav nav--desktop" aria-label="Primary">
+            <NavLinks />
+          </nav>
 
-      <Footer
-        style={{
-          textAlign: 'center',
-          backgroundColor: colorBgContainer,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
+          <button
+            type="button"
+            className="nav-toggle"
+            aria-label="Open menu"
+            aria-expanded={drawerOpen}
+            onClick={() => setDrawerOpen(true)}
+          >
+            <MenuOutlined aria-hidden />
+          </button>
+        </div>
+      </header>
+
+      <Drawer
+        title="Menu"
+        placement="right"
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        width={280}
       >
-        <Row align='middle' gutter={10} justify='center'>
-          <Col className='gutter-row'>
-            Made with <HeartOutlined /> by{' '}
-          </Col>
-          <Row className='gutter-row' align='middle' gutter={5}>
-            <Col className='gutter-row'>
-              <Avatar size={24} src='https://avatars.githubusercontent.com/u/69434200?v=4' />
-            </Col>
-            <Col className='gutter-row'>
-              <a href='https://github.com/selimdev00' target='_blank' rel='noreferrer'>
+        <nav className="drawer-nav" aria-label="Primary">
+          <NavLinks onNavigate={() => setDrawerOpen(false)} />
+        </nav>
+      </Drawer>
+
+      <main id="main" tabIndex={-1} className="main">
+        {children}
+      </main>
+
+      <footer className="site-footer">
+        <div className="container">
+          <div className="footer-grid">
+            <div>
+              <Brand />
+              <p className="footer-brand__tag">
+                A field guide to the Pokemon roster. Every species, with
+                artwork, type matchups and base stats, read live from PokeAPI.
+              </p>
+            </div>
+
+            <div className="footer-links">
+              <h4>Explore</h4>
+              <Link to="/catalog">Catalog</Link>
+              <Link to="/search">Search by name</Link>
+              <Link to="/about">About</Link>
+              <a href="https://pokeapi.co" target="_blank" rel="noreferrer">
+                PokeAPI
+              </a>
+            </div>
+          </div>
+
+          <div className="footer-legend">
+            <div className="footer-legend__label">The eighteen types</div>
+            <TypeLegend />
+          </div>
+
+          <div className="footer-bottom">
+            <span>Data by PokeAPI. Artwork (c) Nintendo, Game Freak.</span>
+            <span>
+              Made by{' '}
+              <a
+                href="https://github.com/selimdev00"
+                target="_blank"
+                rel="noreferrer"
+              >
                 selimdev
               </a>
-            </Col>
-          </Row>
-        </Row>
-      </Footer>
-    </Layout>
+            </span>
+          </div>
+        </div>
+      </footer>
+    </div>
   );
 };
 

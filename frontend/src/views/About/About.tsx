@@ -1,98 +1,61 @@
-import React, { useState } from 'react';
-
+import React from 'react';
 import { Link } from 'react-router-dom';
-
-import { theme, Layout, Typography, Image, Row, Col, Button, Breadcrumb } from 'antd';
-import { CompassOutlined } from '@ant-design/icons';
-const { Content } = Layout;
-const { Title, Paragraph } = Typography;
-
-import type { SizeType } from 'antd/es/config-provider/SizeContext';
 
 import Default from '../../layouts/Default';
 
 import aboutImage from './images/about-image.webp';
 import secondAboutImage from './images/about-image-2.webp';
 
-import styles from './about.module.scss';
+const About = () => (
+  <Default>
+    <div className="container">
+      <div className="page-head">
+        <span className="eyebrow">About</span>
+        <h1 className="page-head__title">About this field guide</h1>
+        <p className="page-head__lead">
+          A small, fast reference for the Pokemon roster, built as a clean
+          catalogue over the open PokeAPI data set.
+        </p>
+      </div>
 
-const About = () => {
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
-
-  const [size] = useState<SizeType>('large');
-
-  return (
-    <Default>
-      <Content className='site-layout' style={{ margin: '0 auto', maxWidth: 1200 }}>
-        <Breadcrumb items={[{ title: 'Home' }, { title: 'About pokemons' }]}></Breadcrumb>
-
-        <Title level={2}>About Pokemons</Title>
-
-        <div className='site-layout-content' style={{ background: colorBgContainer }}>
-          <Row gutter={30}>
-            <Col
-              span={6}
-              lg={{ span: 6 }}
-              md={{ span: 6 }}
-              sm={{ span: 24 }}
-              xs={{ span: 24 }}
-              className='row-gutter'
-              style={{ marginBottom: 20 }}
-            >
-              <Image src={aboutImage} style={{ marginBottom: '40px' }} />
-
-              <Image src={secondAboutImage} />
-            </Col>
-
-            <Col
-              span={18}
-              lg={{ span: 18 }}
-              md={{ span: 18 }}
-              sm={{ span: 24 }}
-              xs={{ span: 24 }}
-              className='gutter-row'
-            >
-              <Title>Hello, Pokemon!</Title>
-
-              <Paragraph className={styles.about__text}>
-                Pokemons are creatures that inhabit a vibrant and diverse world of adventure,
-                waiting to be explored. With over 800 species of Pokémon to discover, each with
-                their own unique abilities, strengths, and weaknesses, there is always something new
-                to discover.
-              </Paragraph>
-
-              <Paragraph className={styles.about__text}>
-                Some of the most well-known Pokémon include Pikachu, Charizard, Bulbasaur, Squirtle,
-                and Jigglypuff, but there are countless others waiting to be discovered. Each
-                Pokémon has its own type, such as Fire, Water, Electric, and Grass, which affects
-                their strengths and weaknesses in battle.
-              </Paragraph>
-
-              <Paragraph className={styles.about__text}>
-                In addition to battling, Pokémon can also be collected and trained. Trainers can
-                capture wild Pokémon using special devices called Poké Balls, and then train them to
-                become stronger and evolve into new forms.
-              </Paragraph>
-
-              <Paragraph className={styles.about__text}>
-                Whether you&lsquo;re a seasoned trainer or just starting out, the world of Pokémon
-                is full of exciting adventures and endless possibilities. So grab your Poké Ball and
-                get ready to explore!
-              </Paragraph>
-
-              <Link to='/catalog'>
-                <Button icon={<CompassOutlined />} size={size}>
-                  Explore now!
-                </Button>
-              </Link>
-            </Col>
-          </Row>
+      <div className="about-grid">
+        <div className="about-figure">
+          <img src={aboutImage} alt="Pokemon illustration" />
+          <img src={secondAboutImage} alt="Pokemon illustration" />
         </div>
-      </Content>
-    </Default>
-  );
-};
+
+        <div className="prose">
+          <p>
+            This app reads everything from PokeAPI, the open Pokemon data API,
+            and presents it as a catalogue you can browse, search and filter. It
+            stays deliberately simple: no accounts, no tracking, just the
+            artwork and the numbers.
+          </p>
+
+          <h2>What you can do</h2>
+          <p>
+            Browse every species, search by name, filter the table by type, and
+            open any entry for its base stats, abilities, height and weight. Each
+            of the eighteen types carries its own colour, so matchups read at a
+            glance on cards, in the table and in the footer legend.
+          </p>
+
+          <h2>How it works</h2>
+          <p>
+            The catalogue loads a page of Pokemon at a time and fetches each
+            entry&apos;s details on demand. Type colours and stat bars are
+            computed from the same payload, so what you see always matches the
+            source. Built with React, Redux Toolkit and Ant Design, themed with
+            a custom OKLCH design system.
+          </p>
+
+          <Link to="/catalog" className="btn btn--primary">
+            Open the catalogue
+          </Link>
+        </div>
+      </div>
+    </div>
+  </Default>
+);
 
 export default About;

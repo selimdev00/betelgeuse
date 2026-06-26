@@ -1,24 +1,23 @@
 import React from 'react';
 
-import { Layout, Breadcrumb, Typography } from 'antd';
-const { Title } = Typography;
-
 import PokemonCatalog from '../../features/pokemon/PokemonCatalog';
 import Default from '../../layouts/Default';
-const { Content } = Layout;
 
-const Home = () => {
-  return (
-    <Default>
-      <Content className='site-layout' style={{ margin: '0 auto', maxWidth: 1600 }}>
-        <Breadcrumb items={[{ title: 'Home' }, { title: 'Catalog' }]}></Breadcrumb>
+const Catalog = () => (
+  <Default>
+    <div className="container">
+      <div className="page-head">
+        <span className="eyebrow">The roster</span>
+        <h1 className="page-head__title">Pokemon catalogue</h1>
+        <p className="page-head__lead">
+          Page through every species. Each card shows artwork, types and a stat
+          preview. Open one for its full base stats, abilities and measurements.
+        </p>
+      </div>
 
-        <Title level={2}>Pokemons</Title>
+      <PokemonCatalog />
+    </div>
+  </Default>
+);
 
-        <PokemonCatalog />
-      </Content>
-    </Default>
-  );
-};
-
-export default Home;
+export default Catalog;

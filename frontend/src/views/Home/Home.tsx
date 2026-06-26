@@ -1,94 +1,115 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+
 import Default from '../../layouts/Default';
+import { useReveal } from '../../hooks/useReveal';
+import { request } from '../../utils/ky';
 
-import ReactPlayer from 'react-player';
+import heroArt from './images/1.webp';
 
-import { Typography, Layout, theme, Image, Row, Col } from 'antd';
-const { Title, Paragraph } = Typography;
-const { Content } = Layout;
-
-import firstImage from './images/1.webp';
-import logo from '../../assets/images/pokemon-logo.webp';
+const FEATURES = [
+  {
+    no: '01',
+    title: 'Browse the catalogue',
+    body: 'Page through every species with official artwork and a base-stat preview on each card.',
+  },
+  {
+    no: '02',
+    title: 'Search by name',
+    body: 'Find any Pokemon as you type, then filter the table down to a single type.',
+  },
+  {
+    no: '03',
+    title: 'A type colour system',
+    body: 'Each of the eighteen types owns a colour, so matchups read at a glance everywhere.',
+  },
+  {
+    no: '04',
+    title: 'Full base stats',
+    body: 'Open any entry for HP, attack, defense and speed, plus abilities and measurements.',
+  },
+];
 
 const Home = () => {
-  const {
-    token: { colorBgContainer },
-  } = theme.useToken();
+  const [count, setCount] = useState<number>();
+  const featuresRef = useReveal<HTMLDivElement>();
+
+  useEffect(() => {
+    let active = true;
+    request
+      .get('pokemon?limit=1')
+      .json<{ count: number }>()
+      .then((data) => {
+        if (active) setCount(data.count);
+      })
+      .catch(() => undefined);
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <Default>
-      <Content className='site-layout' style={{ margin: '0 auto', maxWidth: 1200 }}>
-        <div
-          className='site-layout-content'
-          style={{ backgroundColor: colorBgContainer, minHeight: '100vh' }}
-        >
-          <Title>Welcome, to Pokemon Website</Title>
-
-          <Paragraph style={{ fontSize: 20 }}>
-            Welcome to the world of Pokémon! This is the ultimate destination for all trainers and
-            fans alike. With over 25 years of history, the Pokémon franchise has become a cultural
-            phenomenon, spanning games, trading cards, movies, TV shows, and much more.
-          </Paragraph>
-
-          <Row align='middle' gutter={20}>
-            <Col span={12} xl={12} md={12} sm={24} xs={24} className='gutter-row'>
-              <Image src={firstImage} width='100%' style={{ marginBottom: 30 }} />
-            </Col>
-
-            <Col span={12} xl={12} md={12} sm={24} xs={24} className='gutter-row'>
-              <Image src={logo} width='100%' style={{ marginBottom: 30 }} />
-            </Col>
-          </Row>
-
-          <Paragraph style={{ fontSize: 20 }}>
-            Whether you&apos;re a seasoned trainer or a curious newbie, this website is the perfect
-            place to start your Pokémon journey. Here, you&apos;ll find everything you need to know
-            about catching, training, and battling with your favorite Pokémon.
-          </Paragraph>
-
-          <div className='player-wrapper' style={{ marginBottom: 20 }}>
-            <ReactPlayer
-              className='react-player'
-              url='https://www.youtube.com/watch?v=_c_hMehCORQ'
-              controls={true}
-              width='100%'
-              height='100%'
-            />
+      <div className="container">
+        <section className="hero">
+          <div>
+            <span className="eyebrow">Pokedex field guide</span>
+            <h1 className="hero__title">
+              Every Pokemon, <em>one field guide.</em>
+            </h1>
+            <p className="hero__lead">
+              Browse the full roster with official artwork, type matchups and
+              base stats, pulled live from PokeAPI. No accounts, no noise, just
+              the data.
+            </p>
+            <div className="hero__cta">
+              <Link to="/catalog" className="btn btn--primary">
+                Open the catalogue
+              </Link>
+              <Link to="/search" className="btn btn--ghost">
+                Search by name
+              </Link>
+            </div>
           </div>
 
-          <Paragraph style={{ fontSize: 20 }}>
-            First, let&apos;s talk about the games. From the original Red and Blue versions to the
-            latest Sword and Shield games, the Pokémon video game series has evolved into a massive
-            RPG adventure. With hundreds of creatures to catch, train, and battle with, each game
-            offers endless hours of fun and excitement.
-          </Paragraph>
+          <div className="hero__art">
+            <img src={heroArt} alt="A group of Pokemon from the series" />
+          </div>
+        </section>
 
-          <Paragraph style={{ fontSize: 20 }}>
-            But that&apos;s not all. Pokémon trading cards have also become a staple of the
-            franchise. With thousands of cards available, you can build your own collection and
-            battle against other players in exciting matches.
-          </Paragraph>
-
-          <Paragraph style={{ fontSize: 20 }}>
-            If you&apos;re a fan of the anime series, you&apos;ll be pleased to know that we have
-            all the latest news and information on the latest seasons. Follow Ash, Pikachu, and
-            their friends on their adventures through different regions of the Pokémon world.
-          </Paragraph>
-
-          <Paragraph style={{ fontSize: 20 }}>
-            But what really sets Pokémon apart from other franchises is its sense of community. Join
-            us on our forums to chat with other fans, share your favorite Pokémon memes, and get
-            tips and advice from experienced trainers. We also hold regular events and tournaments
-            where you can test your skills against other players from around the world.
-          </Paragraph>
-
-          <Paragraph style={{ fontSize: 20 }}>
-            So, what are you waiting for? Dive into the world of Pokémon and join the millions of
-            trainers around the world. With so much to discover and explore, the journey is just
-            beginning.
-          </Paragraph>
+        <div className="stat-strip">
+          <div className="stat-strip__item">
+            <span className="stat-strip__num">
+              {count ? count.toLocaleString() : '900'}
+              <span>+</span>
+            </span>
+            <span className="stat-strip__label">Species catalogued</span>
+          </div>
+          <div className="stat-strip__item">
+            <span className="stat-strip__num">18</span>
+            <span className="stat-strip__label">Elemental types</span>
+          </div>
+          <div className="stat-strip__item">
+            <span className="stat-strip__num">
+              Live<span>.</span>
+            </span>
+            <span className="stat-strip__label">Sourced from PokeAPI</span>
+          </div>
         </div>
-      </Content>
+
+        <section>
+          <span className="eyebrow">What you can do</span>
+          <div className="feature-grid reveal" ref={featuresRef}>
+            {FEATURES.map((f) => (
+              <article className="feature" key={f.no}>
+                <span className="feature__no">{f.no}</span>
+                <h2 className="feature__title">{f.title}</h2>
+                <p className="feature__body">{f.body}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+      </div>
     </Default>
   );
 };

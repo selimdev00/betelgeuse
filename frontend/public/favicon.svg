@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Pokedex Field Guide">
+  <defs>
+    <clipPath id="ball">
+      <circle cx="32" cy="32" r="28" />
+    </clipPath>
+  </defs>
+  <g clip-path="url(#ball)">
+    <rect x="0" y="0" width="64" height="32" fill="#d23a32" />
+    <rect x="0" y="32" width="64" height="32" fill="#fbf8f3" />
+  </g>
+  <circle cx="32" cy="32" r="28" fill="none" stroke="#2c2722" stroke-width="6" />
+  <line x1="4" y1="32" x2="60" y2="32" stroke="#2c2722" stroke-width="6" />
+  <circle cx="32" cy="32" r="10" fill="#fbf8f3" stroke="#2c2722" stroke-width="6" />
+  <circle cx="32" cy="32" r="4" fill="#fbf8f3" stroke="#2c2722" stroke-width="3" />
+</svg>

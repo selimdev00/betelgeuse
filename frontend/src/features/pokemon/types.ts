@@ -30,16 +30,16 @@ export interface Pokemon {
   stats: Stat[];
   types: PokemonType[];
   sprites: {
-    front_default: string;
+    front_default: string | null;
     other: {
       'official-artwork': {
-        front_default: string;
+        front_default: string | null;
       };
       dream_world: {
-        front_default: string;
+        front_default: string | null;
       };
       home: {
-        front_default: string;
+        front_default: string | null;
       };
     };
   };

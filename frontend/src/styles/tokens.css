@@ -1,0 +1,158 @@
+/* ==========================================================================
+   Design tokens - Modern Pokedex Field Guide
+   Warm paper surfaces, ink type, one owned crimson, 18-type colour system.
+   All colours OKLCH. No #000, no #fff.
+   ========================================================================== */
+
+:root {
+  /* surfaces - warm off-white paper, never pure white */
+  --bg: oklch(0.971 0.008 85);
+  --bg-deep: oklch(0.952 0.012 82);
+  --surface: oklch(0.992 0.004 85);
+  --surface-sunk: oklch(0.955 0.01 85);
+  --surface-dot: oklch(0.9 0.012 85);
+
+  /* ink - warm near-black, never pure black */
+  --text: oklch(0.27 0.022 55);
+  --text-muted: oklch(0.5 0.02 58);
+  --text-faint: oklch(0.7 0.014 60);
+
+  /* borders / lines */
+  --border: oklch(0.89 0.01 80);
+  --border-strong: oklch(0.8 0.013 78);
+
+  /* brand - Pokedex crimson */
+  --accent: oklch(0.575 0.205 25);
+  --accent-hover: oklch(0.515 0.2 25);
+  --accent-press: oklch(0.46 0.18 25);
+  --accent-soft: oklch(0.94 0.045 28);
+  --accent-line: oklch(0.86 0.09 28);
+  --on-accent: oklch(0.985 0.008 85);
+
+  /* semantic */
+  --focus-ring: oklch(0.575 0.205 25 / 0.5);
+  --success: oklch(0.62 0.14 150);
+  --danger: oklch(0.55 0.2 25);
+
+  /* radius */
+  --r-card: 18px;
+  --r-modal: 22px;
+  --r-pill: 999px;
+  --r-btn: 11px;
+  --r-input: 11px;
+
+  /* spacing scale (4px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+
+  /* motion */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-fast: 150ms;
+  --dur: 240ms;
+  --dur-slow: 320ms;
+
+  /* layout */
+  --container: 1200px;
+  --header-h: 68px;
+
+  /* elevation - warm, low, never harsh */
+  --shadow-sm: 0 1px 2px oklch(0.4 0.03 60 / 0.06), 0 2px 6px oklch(0.4 0.03 60 / 0.05);
+  --shadow-md: 0 4px 10px oklch(0.4 0.03 60 / 0.08), 0 14px 30px oklch(0.4 0.03 60 / 0.08);
+  --shadow-lg: 0 10px 24px oklch(0.4 0.03 60 / 0.1), 0 30px 60px oklch(0.4 0.03 60 / 0.12);
+
+  /* fonts */
+  --font-display: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, "SF Mono", "JetBrains Mono", monospace;
+
+  /* stat-bar palette (fixed, semantic - replaces random colours) */
+  --stat-hp: oklch(0.64 0.16 145);
+  --stat-attack: oklch(0.64 0.19 40);
+  --stat-defense: oklch(0.6 0.15 245);
+  --stat-special-attack: oklch(0.62 0.18 350);
+  --stat-special-defense: oklch(0.6 0.14 200);
+  --stat-speed: oklch(0.75 0.16 95);
+}
+
+/* ---- 18 pokemon types: solid (chip/glow), soft (wash), on (text over solid) ---- */
+:root {
+  --type-normal-solid: oklch(0.68 0.04 90);
+  --type-normal-soft: oklch(0.93 0.02 90);
+  --type-normal-on: oklch(0.22 0.02 90);
+
+  --type-fire-solid: oklch(0.66 0.19 40);
+  --type-fire-soft: oklch(0.94 0.05 45);
+  --type-fire-on: oklch(0.99 0.02 50);
+
+  --type-water-solid: oklch(0.62 0.15 245);
+  --type-water-soft: oklch(0.93 0.04 245);
+  --type-water-on: oklch(0.99 0.02 245);
+
+  --type-grass-solid: oklch(0.66 0.16 145);
+  --type-grass-soft: oklch(0.93 0.05 145);
+  --type-grass-on: oklch(0.99 0.02 145);
+
+  --type-electric-solid: oklch(0.83 0.16 100);
+  --type-electric-soft: oklch(0.96 0.06 100);
+  --type-electric-on: oklch(0.27 0.07 95);
+
+  --type-psychic-solid: oklch(0.65 0.18 350);
+  --type-psychic-soft: oklch(0.94 0.05 350);
+  --type-psychic-on: oklch(0.99 0.02 350);
+
+  --type-ice-solid: oklch(0.8 0.09 205);
+  --type-ice-soft: oklch(0.96 0.03 205);
+  --type-ice-on: oklch(0.26 0.05 205);
+
+  --type-dragon-solid: oklch(0.52 0.18 285);
+  --type-dragon-soft: oklch(0.92 0.05 285);
+  --type-dragon-on: oklch(0.99 0.02 285);
+
+  --type-dark-solid: oklch(0.4 0.03 60);
+  --type-dark-soft: oklch(0.88 0.02 60);
+  --type-dark-on: oklch(0.98 0.01 60);
+
+  --type-fairy-solid: oklch(0.76 0.11 350);
+  --type-fairy-soft: oklch(0.95 0.04 350);
+  --type-fairy-on: oklch(0.26 0.07 350);
+
+  --type-fighting-solid: oklch(0.55 0.17 30);
+  --type-fighting-soft: oklch(0.93 0.05 30);
+  --type-fighting-on: oklch(0.99 0.02 30);
+
+  --type-flying-solid: oklch(0.72 0.09 270);
+  --type-flying-soft: oklch(0.95 0.03 270);
+  --type-flying-on: oklch(0.25 0.05 270);
+
+  --type-poison-solid: oklch(0.55 0.17 320);
+  --type-poison-soft: oklch(0.93 0.05 320);
+  --type-poison-on: oklch(0.99 0.02 320);
+
+  --type-ground-solid: oklch(0.68 0.1 70);
+  --type-ground-soft: oklch(0.94 0.04 70);
+  --type-ground-on: oklch(0.24 0.05 70);
+
+  --type-rock-solid: oklch(0.6 0.06 80);
+  --type-rock-soft: oklch(0.92 0.03 80);
+  --type-rock-on: oklch(0.99 0.02 80);
+
+  --type-bug-solid: oklch(0.71 0.16 130);
+  --type-bug-soft: oklch(0.94 0.05 130);
+  --type-bug-on: oklch(0.23 0.06 130);
+
+  --type-ghost-solid: oklch(0.49 0.12 300);
+  --type-ghost-soft: oklch(0.92 0.04 300);
+  --type-ghost-on: oklch(0.99 0.02 300);
+
+  --type-steel-solid: oklch(0.68 0.04 230);
+  --type-steel-soft: oklch(0.94 0.02 230);
+  --type-steel-on: oklch(0.25 0.03 230);
+}
